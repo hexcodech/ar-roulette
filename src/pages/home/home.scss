@@ -1,0 +1,19 @@
+page-home {
+  video {
+    position: absolute;
+    z-index: -5;
+  }
+
+  .rouletteIntroOverlay {
+    background-color: rgba(0,0,0,0.75);
+    height: 100vh;
+
+    h1 {
+      font-size: 3em;
+      color: white;
+    }
+    h1:nth-of-type(even) {
+      color: #cdcdcd;
+    }
+  }
+}

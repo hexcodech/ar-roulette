@@ -1,0 +1,14 @@
+<video *ngIf="showRouletteIntro" (ended)="rouletteLoopIntroEnded()" autoplay src="assets/RouletteStartLoop.mp4"></video>
+<video *ngIf="showRouletteIntroLoop" #RouletteLoop autoplay loop src="assets/RouletteLoop.mp4"></video>
+
+<div class="rouletteIntroOverlay">
+  <ion-grid>
+    <ion-col col-6>
+      <h1>WELCOME 007</h1>
+      <h1>WILLKOMMEN 007</h1>
+      <br>
+      <h1>PLEASE UNLOCK</h1>
+      <h1>BITTE ENTSPERREN</h1>
+    </ion-col>
+  </ion-grid>
+</div>

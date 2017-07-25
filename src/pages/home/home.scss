@@ -4,6 +4,11 @@ page-home {
     z-index: -5;
   }
 
+  ion-grid  {
+    height: 100vh;
+    justify-content: center;
+  }
+
   .rouletteIntroOverlay {
     background-color: rgba(0,0,0,0.75);
     height: 100vh;

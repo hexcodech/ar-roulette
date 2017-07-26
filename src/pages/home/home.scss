@@ -1,4 +1,6 @@
 page-home {
+  color: white;
+
   video {
     position: absolute;
     z-index: -5;
@@ -7,6 +9,10 @@ page-home {
   ion-grid  {
     height: 100vh;
     justify-content: center;
+
+    .button-large-md {
+      height: 3.25em;
+    }
   }
 
   .rouletteIntroOverlay {

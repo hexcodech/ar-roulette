@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Net;
 using System.Threading;
 using libzkfpcsharp;
 
@@ -26,10 +27,15 @@ namespace fingerprintServer
 
     const int MESSAGE_CAPTURED_OK = 0x0400 + 6;
 
+
+    bool finger1Identified = false;
+    WebServer ws;
+
     static void Main(string[] args)
     {
       Program program = new Program();
 
+      program.InitializeWebServer();
       program.InitializeDevice();
       program.OpenDevice();
       program.StartMenuLoop();
@@ -167,6 +173,10 @@ namespace fingerprintServer
                 if (ret == zkfp.ZKFP_ERR_OK)
                 {
                   Console.WriteLine("Successfully identified finger fid=" + fid + ", score=" + score);
+                  if (fid == 1)
+                    finger1Identified = true;
+                  else
+                    finger1Identified = false;
                   return;
                 }
                 else
@@ -242,6 +252,23 @@ namespace fingerprintServer
             break;
         }
       } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
+    }
+
+    private void InitializeWebServer()
+    {
+      ws = new WebServer(SendWebResponse, "http://localhost:8080/fingerprint/");
+      ws.Run();
+    }
+
+    private string SendWebResponse(HttpListenerRequest request)
+    {
+      if (finger1Identified)
+      {
+        finger1Identified = false;
+        return "true";
+      }
+      else
+        return "false";
     }
   }
 }

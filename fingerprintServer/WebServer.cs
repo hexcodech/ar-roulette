@@ -9,6 +9,7 @@ namespace fingerprintServer
   {
     private readonly HttpListener _listener = new HttpListener();
     private readonly Func<HttpListenerRequest, string> _responderMethod;
+    private WebHeaderCollection headers = new WebHeaderCollection();
 
     public WebServer(string[] prefixes, Func<HttpListenerRequest, string> method)
     {
@@ -29,6 +30,9 @@ namespace fingerprintServer
         _listener.Prefixes.Add(s);
 
       _responderMethod = method;
+
+      headers.Add("Access-Control-Allow-Origin:*");
+
       _listener.Start();
     }
 
@@ -52,6 +56,7 @@ namespace fingerprintServer
                 string rstr = _responderMethod(ctx.Request);
                 byte[] buf = Encoding.UTF8.GetBytes(rstr);
                 ctx.Response.ContentLength64 = buf.Length;
+                ctx.Response.Headers = headers;
                 ctx.Response.OutputStream.Write(buf, 0, buf.Length);
               }
               catch { } // suppress any exceptions

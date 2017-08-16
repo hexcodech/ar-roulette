@@ -10,6 +10,7 @@ export class HomePage {
 
   private showRouletteIntro: boolean = true;
   private showRouletteIntroLoop: boolean = false;
+  private fadeInOverlay: boolean = false;
   private unlocked: boolean = false;
 
   private blueSelected: number = 0;
@@ -29,9 +30,15 @@ export class HomePage {
       .subscribe((data) => {
         if(data === true) {
           this.unlocked = true;
-          observable.unsubscribe();
+
+          // Don't unsubscribe to prevent multiple scans to skip next time
+          // observable.unsubscribe();
         }
       });
+
+    setTimeout(() => {
+      this.fadeInOverlay = true;
+    }, 3500);
   }
 
   private rouletteLoopIntroEnded()  {
@@ -72,6 +79,33 @@ export class HomePage {
   }
 
   private decrease(color: string) {
+    switch (color) {
+      case 'blue':
+        this.blueSelected--;
+        if(this.blueSelected < 0)
+          this.blueSelected = this.blueValues.length - 1;
+        break;
+      case 'yellow':
+        this.yellowSelected--;
+        if(this.yellowSelected < 0)
+          this.yellowSelected = this.yellowValues.length - 1;
+        break;
+      case 'red':
+        this.redSelected--;
+        if(this.redSelected < 0)
+          this.redSelected = this.redValues.length - 1;
+        break;
+      case 'green':
+        this.greenSelected--;
+        if(this.greenSelected < 0)
+          this.greenSelected = this.greenValues.length - 1;
+        break;
+      case 'white':
+        this.whiteSelected--;
+        if(this.whiteSelected < 0)
+          this.whiteSelected = this.whiteValues.length - 1;
+        break;
+    }
 
   }
 

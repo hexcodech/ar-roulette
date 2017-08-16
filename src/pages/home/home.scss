@@ -18,6 +18,8 @@ page-home {
   .rouletteIntroOverlay {
     background-color: rgba(0,0,0,0.75);
     height: 100vh;
+    opacity: 0;
+    transition: .5s ease-in-out all;
 
     h1 {
       font-size: 3em;
@@ -28,13 +30,85 @@ page-home {
     }
   }
 
+  .button-md-secondary {
+    color: #000;
+    background-color: #24ffe2;
+  }
+
+  .button-outline-md-secondary {
+    color: #24ffe2;
+    border-color: #24ffe2;
+  }
+
+  .rouletteIntroOverlayDisabled {
+    background-color: transparent;
+  }
+
+  #fingerprintAnimationContainer {
+    #fingerprint {
+      cursor: pointer;
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translate3d(-50%,-50%,0);
+    }
+
+    #a, #b, #c, #d, #e {
+      fill: none;
+      stroke: #1af5e0;//#0bf779;
+      stroke-dashoffset: 0;
+      stroke-width: 1;
+      transition: all 300ms ease;
+      animation: draw 4s infinite;
+    }
+
+    #outer-circle {
+      stroke: #1af5e0;
+    }
+
+    #a {
+      stroke-dasharray: 12.15426254272461;
+    }
+
+    #b {
+      stroke-dasharray: 19.79115867614746;
+    }
+
+    #c {
+      stroke-dasharray: 53.00725173950195;
+    }
+
+    #d {
+      stroke-dasharray: 23.70177841186523;
+    }
+
+    #e {
+      stroke-dasharray: 8.837481498718262;
+    }
+
+    @keyframes draw {
+      20% { stroke-dashoffset: 40; }
+      90% { stroke-dashoffset: 0; }
+      100% { stroke-dashoffset: 0; }
+    }
+  }
+
   #serialCodes {
     text-align: center;
+    a:first-child {
+      margin-left: 15px;
+    }
     a {
       font-size: 4.5em;
     }
     h1 {
       font-size: 3.5em;
+      margin-top: -10px;
+      margin-bottom: -20px;
     }
+  }
+
+  .show {
+    opacity: 1 !important;
   }
 }

@@ -24,6 +24,9 @@ export class HomePage {
   private whiteSelected: number = 0;
   private whiteValues: string[] = ['1989', '1953', '1891', '1591', '2591', '2519', '6232'];
 
+  private solved: boolean = false;
+  private failed: boolean = false;
+
   constructor(private http: Http) {
     let observable = Observable.interval(100)
       .switchMap(() => http.get('http://localhost:8080/fingerprint')).map((data) => data.json())
@@ -107,6 +110,22 @@ export class HomePage {
         break;
     }
 
+  }
+
+  private validate() {
+    if(this.redValues[this.redSelected] === '007' && this.blueValues[this.blueSelected] === '201524' && this.yellowValues[this.yellowSelected] === '42424' && this.whiteValues[this.whiteSelected] === '1953' && this.greenValues[this.greenSelected] === '1953') {
+      this.solved = true;
+    }
+    else {
+      this.failed = true;
+    }
+  }
+
+  private failedEnded() {
+    this.failed = false;
+  }
+  private solvedEnded() {
+    location.reload();
   }
 
 }

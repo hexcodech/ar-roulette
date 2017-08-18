@@ -92,8 +92,11 @@
         </a>
       </ion-col>
       <ion-col col-2>
-        <button ion-button color="secondary" large style="margin-top: 65px; margin-right: 30px;">Validate</button>
+        <button (click)="validate()" ion-button color="secondary" large style="margin-top: 65px; margin-right: 30px;">Validate</button>
       </ion-col>
     </ion-row>
   </ion-grid>
 </div>
+
+<video *ngIf="failed" (ended)="failedEnded()" autoplay src="assets/RouletteError.mp4" style="position: absolute; top: 0; z-index: 10;"></video>
+<video *ngIf="solved" (ended)="solvedEnded()" autoplay src="assets/RouletteSolution.mp4" style="position: absolute; top: 0; z-index: 10"></video>

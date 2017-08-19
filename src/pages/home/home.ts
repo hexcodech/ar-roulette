@@ -122,7 +122,7 @@ export class HomePage {
   }
 
   private failedEnded() {
-    this.failed = false;
+    location.reload();
   }
   private solvedEnded() {
     location.reload();

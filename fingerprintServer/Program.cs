@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Threading;
 using libzkfpcsharp;
+using System.Text;
 
 namespace fingerprintServer
 {
@@ -38,7 +39,32 @@ namespace fingerprintServer
       program.InitializeWebServer();
       program.InitializeDevice();
       program.OpenDevice();
+      program.LoadFingerprint();
       program.StartMenuLoop();
+    }
+
+    private void LoadFingerprint()
+    {
+      try
+      {
+        BinaryReader reader = new BinaryReader(File.OpenRead("FingerPrint.save"));
+        RegTmp = reader.ReadBytes(2048);
+        reader.Close();
+
+        if (fpInstance.AddRegTemplate(iFid, RegTmp) == zkfp.ZKFP_ERR_OK)
+        {
+          cbRegTmp = 1;
+          Console.WriteLine("Loaded fingerprint");
+        }
+        else
+        {
+          Console.WriteLine(fpInstance.AddRegTemplate(iFid, RegTmp));
+        }
+      }
+      catch(Exception e)
+      {
+        Console.WriteLine(e);
+      }
     }
 
     private void InitializeDevice()
@@ -140,6 +166,14 @@ namespace fingerprintServer
                     zkfp.ZKFP_ERR_OK && fpInstance.AddRegTemplate(iFid, RegTmp) == zkfp.ZKFP_ERR_OK)
                 {
                   iFid++;
+
+                  BinaryWriter writer = new BinaryWriter(File.OpenWrite("FingerPrint.save"));
+                  writer.Write(RegTmp);
+                  writer.Flush();
+                  writer.Close();
+
+                  bmp.Save("FingerPrint.bmp");
+
                   Console.WriteLine("Saved finger successfully");
                 }
                 else
@@ -269,6 +303,23 @@ namespace fingerprintServer
       }
       else
         return "false";
+    }
+
+    public static string ByteArrayToString(byte[] ba)
+    {
+      StringBuilder hex = new StringBuilder(ba.Length * 2);
+      foreach (byte b in ba)
+        hex.AppendFormat("{0:x2}", b);
+      return hex.ToString();
+    }
+
+    public static byte[] StringToByteArray(String hex)
+    {
+      int NumberChars = hex.Length;
+      byte[] bytes = new byte[NumberChars / 2];
+      for (int i = 0; i < NumberChars; i += 2)
+        bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
+      return bytes;
     }
   }
 }

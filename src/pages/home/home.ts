@@ -20,7 +20,7 @@ export class HomePage {
   private redSelected: number = 0;
   private redValues: string[] = ['707', '777', '107', '207', '307', '007', '907'];
   private greenSelected: number = 0;
-  private greenValues: string[] = ['1989', '1953', '1891', '1591', '7913', '2519', '6232'];
+  private greenValues: string[] = ['576', '913', '000', '111', '197', '276', '159'];
   private whiteSelected: number = 0;
   private whiteValues: string[] = ['1989', '1953', '1891', '1591', '2591', '2519', '6232'];
 
@@ -113,7 +113,7 @@ export class HomePage {
   }
 
   private validate() {
-    if(this.redValues[this.redSelected] === '007' && this.blueValues[this.blueSelected] === '201524' && this.yellowValues[this.yellowSelected] === '42424' && this.whiteValues[this.whiteSelected] === '1953' && this.greenValues[this.greenSelected] === '1953') {
+    if(this.redValues[this.redSelected] === '007' && this.blueValues[this.blueSelected] === '201524' && this.yellowValues[this.yellowSelected] === '42424' && this.whiteValues[this.whiteSelected] === '1953' && this.greenValues[this.greenSelected] === '000') {
       this.solved = true;
     }
     else {
